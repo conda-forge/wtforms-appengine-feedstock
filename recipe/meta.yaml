@@ -14,7 +14,7 @@ source:
   {{ hash_type }}: {{ hash_val }}
 
 build:
-  number: 0
+  number: 1
   script: python setup.py install --single-version-externally-managed --record=record.txt
 
 requirements:
@@ -34,6 +34,7 @@ test:
 about:
   home: http://github.com/wtforms/wtforms-appengine/
   license: BSD 3-Clause
+  license_file: LICENSE.txt
   summary: 'Appengine tools for WTForms'
 
 extra:
