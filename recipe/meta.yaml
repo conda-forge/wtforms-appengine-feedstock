@@ -1,26 +1,27 @@
-{%set name = "wtforms-appengine" %}
-{%set camelName = "WTForms-Appengine" %}
-{%set version = "0.1" %}
-{%set hash_type = "sha256" %}
-{%set hash_val = "56824d785458a8da68fab3d3ba3561831115965197a85a624e4bb9534c69fe19" %}
+{% set name = "wtforms-appengine" %}
+{% set camelName = "WTForms-Appengine" %}
+{% set version = "0.1" %}
+{% set bundle = "zip" %}
+{% set hash_type = "sha256" %}
+{% set hash_val = "56824d785458a8da68fab3d3ba3561831115965197a85a624e4bb9534c69fe19" %}
 
 package:
-  name: {{ name }}
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.zip
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ camelName }}-{{ version }}.zip
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ camelName }}-{{ version }}.{{ bundle }}
   {{ hash_type }}: {{ hash_val }}
 
 build:
   number: 1
-  script: python setup.py install --single-version-externally-managed --record=record.txt
+  noarch: python
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
 
 requirements:
-  build:
+  host:
     - python
-    - setuptools
+    - pip
     - wtforms >=1.0.5
 
   run:
@@ -32,10 +33,11 @@ test:
     - wtforms_appengine
 
 about:
-  home: http://github.com/wtforms/wtforms-appengine/
+  home: https://github.com/wtforms/wtforms-appengine/
   license: BSD 3-Clause
   license_file: LICENSE.txt
   summary: 'Appengine tools for WTForms'
+  dev_url: https://github.com/wtforms/wtforms-appengine/
 
 extra:
   recipe-maintainers:
