@@ -2,7 +2,6 @@
 {% set camelName = "WTForms-Appengine" %}
 {% set version = "0.1" %}
 {% set bundle = "zip" %}
-{% set hash_type = "sha256" %}
 {% set hash_val = "56824d785458a8da68fab3d3ba3561831115965197a85a624e4bb9534c69fe19" %}
 
 package:
@@ -11,24 +10,26 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ camelName }}-{{ version }}.{{ bundle }}
-  {{ hash_type }}: {{ hash_val }}
+  sha256: {{ hash_val }}
 
 build:
-  number: 1
+  number: 2
   noarch: python
   script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
 
 requirements:
   host:
-    - python
+    - python {{ python_min }}
     - pip
     - wtforms >=1.0.5
 
   run:
-    - python
+    - python >={{ python_min }}
     - wtforms >=1.0.5
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - wtforms_appengine
 
